@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+﻿// Noteplaid: Notepad for Hipsters.
+// <copyright file="MainWindow.xaml.cs" company="corb.co and Adam McCarthy">
+//     corb.co and Adam McCarthy. All rights reserved.
+// </copyright>
+// <author>Corban Mailloux</author>
 namespace Noteplaid
 {
+    using System.Windows;
+
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NOTEPLAID!
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// Creates the main window, with plaid, of course.
+        /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
