@@ -43,8 +43,11 @@
                 </Menu>
             </StackPanel>
         </DockPanel>
-        
-        
-        <TextBox TextWrapping="Wrap" SpellCheck.IsEnabled="True" AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" FontSize="16" Margin="0,19,0,0"/>
+
+
+        <TextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" SpellCheck.IsEnabled="True" 
+                 AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" 
+                 FontSize="16" Margin="0,19,0,0"/>
     </Grid>
 </Window>

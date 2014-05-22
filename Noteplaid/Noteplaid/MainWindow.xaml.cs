@@ -5,7 +5,11 @@
 // <author>Corban Mailloux</author>
 namespace Noteplaid
 {
+    using Microsoft.Win32;
+    using System;
+    using System.IO;
     using System.Windows;
+    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for NOTEPLAID!
@@ -28,8 +32,22 @@ namespace Noteplaid
         /// <param name="e">Arguments</param>
         private void OpenCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            // Open a FileSelectDialog.
-            //new FileSelectDialog();
+            // Create an instance of the open file dialog box.
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            // Set filter options and filter index.
+            openFileDialog.Filter = "Text Files (.txt)|*.txt";
+
+            openFileDialog.Multiselect = false;
+
+            // Call the ShowDialog method to show the dialog box.
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Read the file as one string.
+                using (StreamReader file = new StreamReader(openFileDialog.FileName)) {
+                    MainTextBox.Text = file.ReadToEnd();
+                }
+            }
         }
         
         /// <summary>
