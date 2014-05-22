@@ -16,6 +16,11 @@ namespace Noteplaid
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// The filename of the currently open file, or null if no file is empty.
+        /// </summary>
+        private string currOpenFile = null;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// Creates the main window, with plaid, of course.
         /// </summary>
@@ -45,6 +50,8 @@ namespace Noteplaid
                 {
                     MainTextBox.Text = file.ReadToEnd();
                 }
+
+                this.currOpenFile = openFileDialog.FileName;
             }
         }
         
@@ -56,6 +63,29 @@ namespace Noteplaid
         private void OpenCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
         {
             // Open can always execute, for now.
+            e.CanExecute = true;
+        }
+
+        /// <summary>
+        /// Open a new text file into Noteplaid.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Arguments passed</param>
+        private void NewCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            // Should check for saving...
+            MainTextBox.Clear();
+            this.currOpenFile = null;
+        }
+
+        /// <summary>
+        /// Check if the Open command can execute.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Arguments passed</param>
+        private void NewCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            // New can always execute.
             e.CanExecute = true;
         }
     }

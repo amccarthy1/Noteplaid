@@ -6,11 +6,14 @@
         <CommandBinding x:Name="OpenCommand" Command="ApplicationCommands.Open"
                 Executed="OpenCommand_Executed"
                 CanExecute="OpenCommand_CanExecute"/>
+        <CommandBinding x:Name="NewCommand" Command="ApplicationCommands.New"
+                Executed="NewCommand_Executed"
+                CanExecute="NewCommand_CanExecute"/>
     </Window.CommandBindings>
+    <Window.Background>
+        <ImageBrush ImageSource="plaid-light-tile.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,344,404"/>
+    </Window.Background>
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="plaid-light.png"/>
-        </Grid.Background>
         <DockPanel>
             <StackPanel>
                 <Menu DockPanel.Dock="Top">
@@ -45,7 +48,7 @@
         </DockPanel>
 
 
-        <TextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+        <TextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                  ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" SpellCheck.IsEnabled="True" 
                  AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" 
                  FontSize="16" Margin="0,19,0,0"/>
