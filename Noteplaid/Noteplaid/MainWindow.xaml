@@ -3,12 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Noteplaid" Height="500" Width="600">
     <Window.CommandBindings>
-        <CommandBinding x:Name="OpenCommand" Command="ApplicationCommands.Open"
-                Executed="OpenCommand_Executed"
-                CanExecute="OpenCommand_CanExecute"/>
         <CommandBinding x:Name="NewCommand" Command="ApplicationCommands.New"
                 Executed="NewCommand_Executed"
                 CanExecute="NewCommand_CanExecute"/>
+        <CommandBinding x:Name="OpenCommand" Command="ApplicationCommands.Open"
+                Executed="OpenCommand_Executed"
+                CanExecute="OpenCommand_CanExecute"/>
+        <CommandBinding x:Name="SaveCommand" Command="ApplicationCommands.Save"
+                Executed="SaveCommand_Executed"
+                CanExecute="SaveCommand_CanExecute"/>
+        <CommandBinding x:Name="SaveAsCommand" Command="ApplicationCommands.SaveAs"
+                Executed="SaveAsCommand_Executed"
+                CanExecute="SaveAsCommand_CanExecute"/>
     </Window.CommandBindings>
     <Window.Background>
         <ImageBrush ImageSource="plaid-light-tile.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,344,404"/>
@@ -25,10 +31,11 @@
                         <Separator/>
                         <MenuItem Command="ApplicationCommands.Print"/>
                         <Separator/>
-                        <MenuItem Command="ApplicationCommands.Close"/>
+                        <MenuItem Name="ExitMenuItem" Header="_Exit" Click="ExitMenuItem_Click"/>
                     </MenuItem>
                     <MenuItem Header="_Edit">
                         <MenuItem Command="ApplicationCommands.Undo"/>
+                        <MenuItem Command="ApplicationCommands.Redo"/>
                         <Separator/>
                         <MenuItem Command="ApplicationCommands.Cut"/>
                         <MenuItem Command="ApplicationCommands.Copy"/>
