@@ -212,5 +212,25 @@ namespace Noteplaid
             // Close
             Application.Current.Shutdown(0);
         }
+
+        /// <summary>
+        /// Enable spell check when the menu item is checked.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Arguments passed</param>
+        private void SpellCheckMenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+            this.MainTextBox.SpellCheck.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Disable spell check when the menu item is unchecked.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Arguments passed</param>
+        private void SpellCheckMenuItem_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.MainTextBox.SpellCheck.IsEnabled = false;
+        }
     }
 }

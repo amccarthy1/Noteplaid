@@ -20,6 +20,14 @@
         <ImageBrush ImageSource="plaid-light-tile.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,344,404"/>
     </Window.Background>
     <Grid>
+        <!-- The main textbox. 
+            This has to come before the menu bar to allow the menu to set SpellCheck.IsEnabled. -->
+        <TextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" 
+                 AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" 
+                 FontSize="16" Margin="0,19,0,0" SpellCheck.IsEnabled="True"/>
+        
+        <!-- The dockpanel for the menu. -->
         <DockPanel>
             <StackPanel>
                 <Menu DockPanel.Dock="Top">
@@ -46,6 +54,8 @@
                         <MenuItem Command="ApplicationCommands.Replace"/>
                         <Separator/>
                         <MenuItem Command="ApplicationCommands.SelectAll"/>
+                        <Separator/>
+                        <MenuItem Name="SpellCheckMenuItem" Header="_Spell Check" IsCheckable="True" IsChecked="True" Checked="SpellCheckMenuItem_Checked" Unchecked="SpellCheckMenuItem_Unchecked"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
                         <MenuItem Command="ApplicationCommands.Help"/>
@@ -53,11 +63,5 @@
                 </Menu>
             </StackPanel>
         </DockPanel>
-
-
-        <TextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" SpellCheck.IsEnabled="True" 
-                 AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" 
-                 FontSize="16" Margin="0,19,0,0"/>
     </Grid>
 </Window>
