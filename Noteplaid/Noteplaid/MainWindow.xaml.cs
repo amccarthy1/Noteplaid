@@ -8,7 +8,6 @@ namespace Noteplaid
     using System;
     using System.IO;
     using System.Windows;
-    using System.Windows.Controls;    
 
     /// <summary>
     /// Interaction logic for NOTEPLAID!

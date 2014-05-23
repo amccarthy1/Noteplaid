@@ -57,6 +57,14 @@
                         <Separator/>
                         <MenuItem Name="SpellCheckMenuItem" Header="_Spell Check" IsCheckable="True" IsChecked="True" Checked="SpellCheckMenuItem_Checked" Unchecked="SpellCheckMenuItem_Unchecked"/>
                     </MenuItem>
+                    <!-- Doesn't work on TextBox, but will on RichTextBox. 
+                            I'm leaving this is for when Noteplaid gets support for RTF.
+                    <MenuItem Header="_Format">
+                        <MenuItem Command="EditingCommands.ToggleBold"/>
+                        <MenuItem Command="EditingCommands.ToggleItalic"/>
+                        <MenuItem Command="EditingCommands.ToggleUnderline"/>
+                    </MenuItem>
+                    -->
                     <MenuItem Header="_Help">
                         <MenuItem Command="ApplicationCommands.Help"/>
                     </MenuItem>
