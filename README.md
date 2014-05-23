@@ -3,9 +3,9 @@ Noteplaid
 
 Plaid text editor. Perfect for hipsters
 
-Screenshot (V1.0.1):
+Screenshot (V1.0.3):
 
-![GUI Mockup](http://i.imgur.com/7mn5P7Y.png)
+![GUI Mockup](http://i.imgur.com/iGRgDxR.png)
 
 
 
