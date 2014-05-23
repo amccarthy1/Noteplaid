@@ -27,6 +27,7 @@ namespace Noteplaid
         public MainWindow()
         {
             this.InitializeComponent();
+            this.UpdateTitle(null);
         }
 
         /// <summary>
