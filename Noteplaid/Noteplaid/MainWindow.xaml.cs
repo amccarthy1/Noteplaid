@@ -27,6 +27,11 @@ namespace Noteplaid
         {
             this.InitializeComponent();
             this.UpdateTitle(null);
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length == 2)
+            {
+                this.OpenFile(args[1]);
+            }
         }
 
         /// <summary>
@@ -61,14 +66,33 @@ namespace Noteplaid
             // Call the ShowDialog method to show the dialog box.
             if (openFileDialog.ShowDialog() == true)
             {
+                this.OpenFile(openFileDialog.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Open the given file into Noteplaid.
+        /// </summary>
+        /// <param name="filename">The filename to open</param>
+        private void OpenFile(string filename)
+        {
+            try
+            {
                 // Read the file as one string into the MainTextBox.
-                using (StreamReader file = new StreamReader(openFileDialog.FileName)) 
+                using (StreamReader file = new StreamReader(filename))
                 {
                     MainTextBox.Text = file.ReadToEnd();
                 }
 
-                this.currOpenFile = openFileDialog.FileName;
-                this.UpdateTitle(openFileDialog.SafeFileName);
+                this.currOpenFile = filename;
+                this.UpdateTitle(Path.GetFileName(filename));
+            }
+            catch (Exception)
+            {
+                // Error opening file. Open a blank window.
+                MessageBox.Show("Error opening file.");
+                this.currOpenFile = null;
+                this.UpdateTitle(null);
             }
         }
         
