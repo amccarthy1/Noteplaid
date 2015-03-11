@@ -22,8 +22,8 @@
     <Grid>
         <!-- The main textbox. 
             This has to come before the menu bar to allow the menu to set SpellCheck.IsEnabled. -->
-        <TextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" 
+        <RichTextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                  AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" 
                  FontSize="16" Margin="0,19,0,0" SpellCheck.IsEnabled="True"/>
         
@@ -56,15 +56,13 @@
                         <MenuItem Command="ApplicationCommands.SelectAll"/>
                         <Separator/>
                         <MenuItem Name="SpellCheckMenuItem" Header="_Spell Check" IsCheckable="True" IsChecked="True" Checked="SpellCheckMenuItem_Checked" Unchecked="SpellCheckMenuItem_Unchecked"/>
+                        <MenuItem Name="RichTextMenuItem" Header="_Rich Text" IsCheckable="True" IsChecked="False" Checked="RichTextMenuItem_Checked" Unchecked="RichTextMenuItem_Unchecked"/>
                     </MenuItem>
-                    <!-- Doesn't work on TextBox, but will on RichTextBox. 
-                            I'm leaving this is for when Noteplaid gets support for RTF.
                     <MenuItem Header="_Format">
                         <MenuItem Command="EditingCommands.ToggleBold"/>
                         <MenuItem Command="EditingCommands.ToggleItalic"/>
                         <MenuItem Command="EditingCommands.ToggleUnderline"/>
                     </MenuItem>
-                    -->
                     <MenuItem Header="_Help">
                         <MenuItem Command="ApplicationCommands.Help"/>
                     </MenuItem>

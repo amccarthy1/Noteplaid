@@ -8,6 +8,8 @@ namespace Noteplaid
     using System;
     using System.IO;
     using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Documents;
 
     /// <summary>
     /// Interaction logic for NOTEPLAID!
@@ -81,7 +83,8 @@ namespace Noteplaid
                 // Read the file as one string into the MainTextBox.
                 using (StreamReader file = new StreamReader(filename))
                 {
-                    MainTextBox.Text = file.ReadToEnd();
+                    throw new Exception();
+                    //TODO: Open file MainTextBox.Text = file.ReadToEnd();
                 }
 
                 this.currOpenFile = filename;
@@ -115,7 +118,7 @@ namespace Noteplaid
         private void NewCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             // Should check for saving...
-            MainTextBox.Clear();
+            //TODO: Clear text MainTextBox.Clear();
             this.currOpenFile = null;
             this.UpdateTitle(null);
         }
@@ -145,10 +148,10 @@ namespace Noteplaid
             }
             else
             {
-                if (!this.SaveTextToFile(this.MainTextBox.Text, this.currOpenFile))
-                {
-                    MessageBox.Show("Error saving.");
-                }
+                //if (!this.SaveTextToFile(this.MainTextBox.Text, this.currOpenFile))
+                //{
+                //    MessageBox.Show("Error saving.");
+                //}
             }
         }
 
@@ -182,7 +185,7 @@ namespace Noteplaid
             // Call the ShowDialog method to show the dialog box.
             if (saveFileDialog.ShowDialog() == true)
             {
-                if (this.SaveTextToFile(this.MainTextBox.Text, saveFileDialog.FileName))
+                if (this.SaveTextToFile(this.MainTextBox, saveFileDialog.FileName, RichTextMenuItem.IsChecked))
                 {
                     this.currOpenFile = saveFileDialog.FileName;
                     this.UpdateTitle(saveFileDialog.SafeFileName);
@@ -211,11 +214,25 @@ namespace Noteplaid
         /// <param name="text">The text to save</param>
         /// <param name="file">The filename</param>
         /// <returns>true for success; false for failure</returns>
-        private bool SaveTextToFile(string text, string file)
+        private bool SaveTextToFile(RichTextBox textField, string file, bool isRichText)
         {
+            /* set the format */
+            string format = null;
+            if (isRichText)
+            {
+                format = DataFormats.Rtf;
+            }
+            else
+            {
+                format = DataFormats.Text;
+            }
+            /* try to save */
             try
             {
-                File.WriteAllText(file, text);
+                TextRange t = new TextRange(textField.Document.ContentStart,
+                    textField.Document.ContentEnd);
+                FileStream stream = new FileStream(file, FileMode.Create);
+                t.Save(stream, format);
             }
             catch (Exception)
             {
@@ -254,6 +271,16 @@ namespace Noteplaid
         private void SpellCheckMenuItem_Unchecked(object sender, RoutedEventArgs e)
         {
             this.MainTextBox.SpellCheck.IsEnabled = false;
+        }
+
+        private void RichTextMenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RichTextMenuItem_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
