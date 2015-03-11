@@ -293,12 +293,12 @@ namespace Noteplaid
 
         private void RichTextMenuItem_Checked(object sender, RoutedEventArgs e)
         {
-
+            //TODO
         }
 
         private void RichTextMenuItem_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            //TODO
         }
     }
 }
