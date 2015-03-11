@@ -32,7 +32,7 @@ namespace Noteplaid
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length == 2)
             {
-                this.OpenFile(args[1]);
+                this.OpenFile(MainTextBox, args[1]);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Noteplaid
             // Call the ShowDialog method to show the dialog box.
             if (openFileDialog.ShowDialog() == true)
             {
-                this.OpenFile(openFileDialog.FileName);
+                this.OpenFile(MainTextBox, openFileDialog.FileName);
             }
         }
 
@@ -76,19 +76,28 @@ namespace Noteplaid
         /// Open the given file into Noteplaid.
         /// </summary>
         /// <param name="filename">The filename to open</param>
-        private void OpenFile(string filename)
+        private void OpenFile(RichTextBox textField, string filename)
         {
+            /* determine if the file is rich text (set format) */
+            string format;
+            var splitName = filename.Split('.');
+            if(splitName[splitName.Length-1].Equals("rtf"))
+            {
+                format = DataFormats.Rtf;
+                this.RichTextMenuItem.IsChecked = true;
+            }
+            else/* else try to open as plain text */
+            {
+                format = DataFormats.Text;
+            }
+            /* try to open the file */
             try
             {
-                // Read the file as one string into the MainTextBox.
-                using (StreamReader file = new StreamReader(filename))
-                {
-                    throw new Exception();
-                    //TODO: Open file MainTextBox.Text = file.ReadToEnd();
-                }
-
-                this.currOpenFile = filename;
-                this.UpdateTitle(Path.GetFileName(filename));
+                TextRange t = new TextRange(textField.Document.ContentStart,
+                    textField.Document.ContentEnd);
+                FileStream stream = new FileStream(filename, FileMode.Open);
+                t.Load(stream, format);
+                stream.Close();
             }
             catch (Exception)
             {
@@ -148,10 +157,10 @@ namespace Noteplaid
             }
             else
             {
-                //if (!this.SaveTextToFile(this.MainTextBox.Text, this.currOpenFile))
-                //{
-                //    MessageBox.Show("Error saving.");
-                //}
+                if (!this.SaveFile(this.MainTextBox, this.currOpenFile, RichTextMenuItem.IsChecked))
+                {
+                    MessageBox.Show("Error saving.");
+                }
             }
         }
 
@@ -178,14 +187,23 @@ namespace Noteplaid
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
             // Set dialog settings
-            saveFileDialog.Filter = "Text Files|*.txt|All Files|*.*";
+     
+            saveFileDialog.Filter = "Text Files|*.txt|Rich Text Files|*.rtf|All Files|*.*";
             saveFileDialog.FileName = "Untitled";
-            saveFileDialog.DefaultExt = ".txt";
+            if(RichTextMenuItem.IsChecked)
+            {
+                saveFileDialog.DefaultExt = ".rtf";
+            }
+            else
+            {
+                saveFileDialog.DefaultExt = ".txt";
+            }
+            
 
             // Call the ShowDialog method to show the dialog box.
             if (saveFileDialog.ShowDialog() == true)
             {
-                if (this.SaveTextToFile(this.MainTextBox, saveFileDialog.FileName, RichTextMenuItem.IsChecked))
+                if (this.SaveFile(this.MainTextBox, saveFileDialog.FileName, RichTextMenuItem.IsChecked))
                 {
                     this.currOpenFile = saveFileDialog.FileName;
                     this.UpdateTitle(saveFileDialog.SafeFileName);
@@ -214,10 +232,10 @@ namespace Noteplaid
         /// <param name="text">The text to save</param>
         /// <param name="file">The filename</param>
         /// <returns>true for success; false for failure</returns>
-        private bool SaveTextToFile(RichTextBox textField, string file, bool isRichText)
+        private bool SaveFile(RichTextBox textField, string file, bool isRichText)
         {
             /* set the format */
-            string format = null;
+            string format;
             if (isRichText)
             {
                 format = DataFormats.Rtf;
