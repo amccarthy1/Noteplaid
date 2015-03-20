@@ -32,7 +32,7 @@ namespace Noteplaid
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length == 2)
             {
-                this.OpenFile(MainTextBox, args[1]);
+                this.OpenFile(this.MainTextBox, args[1]);
             }
         }
 
@@ -68,36 +68,40 @@ namespace Noteplaid
             // Call the ShowDialog method to show the dialog box.
             if (openFileDialog.ShowDialog() == true)
             {
-                this.OpenFile(MainTextBox, openFileDialog.FileName);
+                this.OpenFile(this.MainTextBox, openFileDialog.FileName);
             }
         }
 
         /// <summary>
         /// Open the given file into Noteplaid.
         /// </summary>
+        /// <param name="textField">The textbox to populate.</param>
         /// <param name="filename">The filename to open</param>
         private void OpenFile(RichTextBox textField, string filename)
         {
-            /* determine if the file is rich text (set format) */
+            // Determine file type
             string format;
-
-            if(Path.GetExtension(filename).ToLower() == ".rtf")
+            if (Path.GetExtension(filename).ToLower() == ".rtf")
             {
                 format = DataFormats.Rtf;
                 this.RichTextMenuItem.IsChecked = true;
             }
-            else/* else try to open as plain text */
+            else
             {
                 format = DataFormats.Text;
             }
-            /* try to open the file */
+
+            // Try to open the file
             try
             {
-                TextRange t = new TextRange(textField.Document.ContentStart,
+                TextRange t = new TextRange(
+                    textField.Document.ContentStart,
                     textField.Document.ContentEnd);
                 FileStream stream = new FileStream(filename, FileMode.Open);
                 t.Load(stream, format);
                 stream.Close();
+
+                this.currOpenFile = filename;
                 this.UpdateTitle(Path.GetFileName(filename));
             }
             catch (Exception)
@@ -128,7 +132,7 @@ namespace Noteplaid
         private void NewCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             // Should check for saving...
-            //TODO: Clear text MainTextBox.Clear();
+            // TODO: Clear text MainTextBox.Clear();
             this.currOpenFile = null;
             this.UpdateTitle(null);
         }
@@ -188,10 +192,9 @@ namespace Noteplaid
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
             // Set dialog settings
-     
             saveFileDialog.Filter = "Plain Text File|*.txt|Rich Text File|*.rtf|All Files|*.*";
             saveFileDialog.FileName = "Untitled";
-            if(RichTextMenuItem.IsChecked)
+            if (RichTextMenuItem.IsChecked)
             {
                 saveFileDialog.DefaultExt = ".rtf";
             }
@@ -200,7 +203,6 @@ namespace Noteplaid
                 saveFileDialog.DefaultExt = ".txt";
             }
             
-
             // Call the ShowDialog method to show the dialog box.
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -230,12 +232,13 @@ namespace Noteplaid
         /// <summary>
         /// Save the text to the file.
         /// </summary>
-        /// <param name="text">The text to save</param>
+        /// <param name="textField">The text field to save from.</param>
         /// <param name="file">The filename</param>
+        /// <param name="isRichText">Indicates is RTF mode is active</param>
         /// <returns>true for success; false for failure</returns>
         private bool SaveFile(RichTextBox textField, string file, bool isRichText)
         {
-            /* set the format */
+            // Set the format for saving
             string format;
             if (isRichText)
             {
@@ -245,10 +248,12 @@ namespace Noteplaid
             {
                 format = DataFormats.Text;
             }
-            /* try to save */
+
+            // Try to save the file
             try
             {
-                TextRange t = new TextRange(textField.Document.ContentStart,
+                TextRange t = new TextRange(
+                    textField.Document.ContentStart,
                     textField.Document.ContentEnd);
                 FileStream stream = new FileStream(file, FileMode.Create);
                 t.Save(stream, format);
@@ -292,14 +297,37 @@ namespace Noteplaid
             this.MainTextBox.SpellCheck.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Additional logic for when RTF is enabled.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Arguments passed</param>
         private void RichTextMenuItem_Checked(object sender, RoutedEventArgs e)
         {
-            //TODO
+            // Maybe this isn't the best way to handle this, but it solves an 
+            // issue where saving after switching RTF will mess up the output.
+            this.OnChangeType();
         }
 
+        /// <summary>
+        /// Additional logic for when RTF is disabled.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Arguments passed</param>
         private void RichTextMenuItem_Unchecked(object sender, RoutedEventArgs e)
         {
-            //TODO
+            // Maybe this isn't the best way to handle this, but it solves an 
+            // issue where saving after switching RTF will mess up the output.
+            this.OnChangeType();
+        }
+
+        /// <summary>
+        /// Called to do additional logic when RTF mode is toggled.
+        /// </summary>
+        private void OnChangeType()
+        {
+            this.currOpenFile = null;
+            this.UpdateTitle(null);
         }
     }
 }
