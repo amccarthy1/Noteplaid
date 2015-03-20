@@ -63,7 +63,7 @@ namespace Noteplaid
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter
-            openFileDialog.Filter = "Text Files|*.txt|All Files|*.*";
+            openFileDialog.Filter = "Text Files (*.txt, *.rtf)|*.txt;*.rtf|All Files|*.*";
 
             // Call the ShowDialog method to show the dialog box.
             if (openFileDialog.ShowDialog() == true)
@@ -80,8 +80,8 @@ namespace Noteplaid
         {
             /* determine if the file is rich text (set format) */
             string format;
-            var splitName = filename.Split('.');
-            if(splitName[splitName.Length-1].Equals("rtf"))
+
+            if(Path.GetExtension(filename).ToLower() == ".rtf")
             {
                 format = DataFormats.Rtf;
                 this.RichTextMenuItem.IsChecked = true;
@@ -98,6 +98,7 @@ namespace Noteplaid
                 FileStream stream = new FileStream(filename, FileMode.Open);
                 t.Load(stream, format);
                 stream.Close();
+                this.UpdateTitle(Path.GetFileName(filename));
             }
             catch (Exception)
             {
@@ -188,7 +189,7 @@ namespace Noteplaid
 
             // Set dialog settings
      
-            saveFileDialog.Filter = "Text Files|*.txt|Rich Text Files|*.rtf|All Files|*.*";
+            saveFileDialog.Filter = "Plain Text File|*.txt|Rich Text File|*.rtf|All Files|*.*";
             saveFileDialog.FileName = "Untitled";
             if(RichTextMenuItem.IsChecked)
             {

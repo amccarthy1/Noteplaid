@@ -59,9 +59,9 @@
                         <MenuItem Name="RichTextMenuItem" Header="_Rich Text" IsCheckable="True" IsChecked="False" Checked="RichTextMenuItem_Checked" Unchecked="RichTextMenuItem_Unchecked"/>
                     </MenuItem>
                     <MenuItem Header="_Format">
-                        <MenuItem Command="EditingCommands.ToggleBold"/>
-                        <MenuItem Command="EditingCommands.ToggleItalic"/>
-                        <MenuItem Command="EditingCommands.ToggleUnderline"/>
+                        <MenuItem Command="EditingCommands.ToggleBold" Header="Bold"/>
+                        <MenuItem Command="EditingCommands.ToggleItalic" Header="Italic"/>
+                        <MenuItem Command="EditingCommands.ToggleUnderline" Header="Underline"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
                         <MenuItem Command="ApplicationCommands.Help"/>
