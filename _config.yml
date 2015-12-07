@@ -1,0 +1,29 @@
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: NotePlaid
+#email: your-email@domain.com
+description: > # this means to ignore newlines until "baseurl:"
+  The best plaid text editor, now online!
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://amccarthy.me/Noteplaid/" # the base hostname & protocol for your site
+permalink: pretty # to remove the ".html" extension when serving file
+
+# Limit what is hosted on the site.
+exclude: 
+  - "CNAME"
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "README.md"
+  - "Noteplaid Website.sublime-project"
+  - "Noteplaid Website.sublime-workspace"
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "default"

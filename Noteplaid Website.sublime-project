@@ -1,0 +1,19 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns": [".git", ".sass-cache", "_site"],
+			"file_exclude_patterns": ["Gemfile.lock", ".jekyll-metadata", "*.sublime-*"]
+		}
+	],
+    "build_systems":
+    [
+        {
+            "name": "jekyll",
+            "cmd": ["start", "bundle", "exec", "jekyll", "serve"],
+            "working_dir": "$project_path",
+            "shell": true
+        }
+    ]
+}
