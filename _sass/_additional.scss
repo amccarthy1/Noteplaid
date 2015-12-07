@@ -3,7 +3,7 @@
  */
 
 body { 
-    background-image: url(/images/plaid-light-tile.png);
+    //background-image: url({{ site.url }}/images/plaid-light-tile.png); // Need {{ site.url }}
     padding-bottom: 25px;
 }
 
