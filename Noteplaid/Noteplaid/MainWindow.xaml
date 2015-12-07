@@ -25,7 +25,13 @@
         <RichTextBox x:Name="MainTextBox" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  AcceptsReturn="True" AcceptsTab="True" Background="{x:Null}" 
-                 FontSize="16" Margin="0,19,0,0" SpellCheck.IsEnabled="True"/>
+                 FontSize="16" Margin="0,19,0,0" SpellCheck.IsEnabled="True">
+            <RichTextBox.CommandBindings>
+                <CommandBinding Command="EditingCommands.ToggleBold" CanExecute="isRichText" />
+                <CommandBinding Command="EditingCommands.ToggleItalic" CanExecute="isRichText" />
+                <CommandBinding Command="EditingCommands.ToggleUnderline" CanExecute="isRichText" />
+            </RichTextBox.CommandBindings>
+        </RichTextBox>
         
         <!-- The dockpanel for the menu. -->
         <DockPanel>
@@ -59,7 +65,7 @@
                         <MenuItem Name="RichTextMenuItem" Header="_Rich Text" IsCheckable="True" IsChecked="False" Checked="RichTextMenuItem_Checked" Unchecked="RichTextMenuItem_Unchecked"/>
                     </MenuItem>
                     <MenuItem Header="_Format">
-                        <MenuItem Command="EditingCommands.ToggleBold" Header="Bold"/>
+                        <MenuItem Command="EditingCommands.ToggleBold" Header="Bold" />
                         <MenuItem Command="EditingCommands.ToggleItalic" Header="Italic"/>
                         <MenuItem Command="EditingCommands.ToggleUnderline" Header="Underline"/>
                     </MenuItem>

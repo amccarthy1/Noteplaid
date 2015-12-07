@@ -20,6 +20,19 @@ namespace Noteplaid
         /// The filename and path of the currently open file, or null if no file is open.
         /// </summary>
         private string currOpenFile = null;
+        private bool isRichTextEnabled;
+        public bool RichTextEnabled
+        {
+            get
+            {
+                return isRichTextEnabled;
+            }
+
+            set
+            {
+                isRichTextEnabled = value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -85,10 +98,12 @@ namespace Noteplaid
             {
                 format = DataFormats.Rtf;
                 this.RichTextMenuItem.IsChecked = true;
+                this.RichTextEnabled = true;
             }
             else
             {
                 format = DataFormats.Text;
+                this.RichTextEnabled = false;
             }
 
             // Try to open the file
@@ -307,6 +322,7 @@ namespace Noteplaid
             // Maybe this isn't the best way to handle this, but it solves an 
             // issue where saving after switching RTF will mess up the output.
             this.OnChangeType();
+            this.RichTextEnabled = true;
         }
 
         /// <summary>
@@ -319,6 +335,7 @@ namespace Noteplaid
             // Maybe this isn't the best way to handle this, but it solves an 
             // issue where saving after switching RTF will mess up the output.
             this.OnChangeType();
+            this.RichTextEnabled = false;
         }
 
         /// <summary>
@@ -328,6 +345,18 @@ namespace Noteplaid
         {
             this.currOpenFile = null;
             this.UpdateTitle(null);
+        }
+
+        /// <summary>
+        /// Check if rich text is enabled. Used by command bindings in the XAML file to enable/disable
+        /// rich text functionality.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void isRichText(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.RichTextEnabled;
+            e.Handled = true;
         }
     }
 }
