@@ -31,6 +31,7 @@ namespace Noteplaid
             set
             {
                 isRichTextEnabled = value;
+                this.RichTextMenuItem.IsChecked = value;
             }
         }
 
@@ -97,7 +98,6 @@ namespace Noteplaid
             if (Path.GetExtension(filename).ToLower() == ".rtf")
             {
                 format = DataFormats.Rtf;
-                this.RichTextMenuItem.IsChecked = true;
                 this.RichTextEnabled = true;
             }
             else
